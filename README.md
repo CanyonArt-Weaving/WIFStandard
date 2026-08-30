@@ -17,11 +17,10 @@ remains the historical source.
 
 ### Scope
 
-This guide limits itself to what the [Canyon Art / WeaveIt](https://www.weaveit.com)
-applications read and write. Their author was one of the original WIF 1.1 developers, so
-where those applications ignore a part of the format, this guide treats that part as
-**effectively deprecated** and describes it only briefly, under
-[Obsolete and unsupported](#obsolete-and-unsupported).
+This guide limits itself to what the [Canyon Art WeaveIt](https://weaveit.com/) applications read and write. Their author was
+one of the original WIF 1.1 developers, so where those applications ignore a part of the
+format, this guide treats that part as **effectively deprecated** and describes it only
+briefly, under [Obsolete and unsupported](#obsolete-and-unsupported).
 
 ### Credits
 
@@ -427,8 +426,8 @@ recognize a private section skips it. **No line inside a private section may beg
 Sparkles=1
 ```
 
-WeaveIt's own private sections are cataloged in
-[Appendix: WeaveIt private sections](#appendix-weaveit-private-sections).
+A reader that does not know `WEAVEIT` skips straight from the `[PRIVATE WEAVEIT AWESOME]`
+header to the next `[` at the start of a line.
 
 ---
 
@@ -636,50 +635,19 @@ Silently ignore these; they are left in the format only for completeness:
 
 ---
 
-## Appendix: WeaveIt private sections
+## License and attribution
 
-These are the private sections the Canyon Art / WeaveIt applications write. They are
-documented here as a real-world example of the private-section mechanism; other programs
-have no reason to read them.
+**The WIF format** is the work of Ravi Nielsen (Maple Hill Software) and the 1996 and 1997
+WIF developer groups — see [Credits](#credits). Nothing in this document claims any right
+in the format itself, and no one owns it; it is a shared standard.
 
-### PRIVATE WEAVEIT BASICS
+**This document** is an independent, plain-language description of that format. It does not
+copy or adapt the original specification. The original WIF 1.1 text,
+[Copyright © 1996, 1997 Ravi Nielsen](http://www.tantradharma.com/maplehill/wif/wif1-1.txt),
+remains the historical source and is not reproduced here.
 
-```
-[PRIVATE WEAVEIT BASICS]
-WEAVETYPE=BALANCE
-```
-
-`WEAVETYPE` is one of `BALANCE`, `WARPFACE`, `WEFTFACE`, `DOUBLEWEAVE`, `PROFILEDRAFT`,
-`DOUBLEWIDTH`. It tells the drawing code how to shade the drawdown.
-
-### PRIVATE IWEAVEIT PROJECT
-
-Planning information for a physical project: loom dimensions, take-up and shrinkage
-allowances, finished measurements, working units, sett and picks-per-inch, and flags such
-as whether the draft uses a lift plan or multi-treadling. Read only by WeaveIt; ignored by
-everything else.
-
-### PRIVATE IWEAVEIT YARNS
-
-A richer version of `[COLOR TABLE]` — one keyline per yarn:
-
-```
-[PRIVATE IWEAVEIT YARNS]
-1=246,238,196, Yellow, 10/2, 2, 0
-```
-
-The fields are `R, G, B, name, yarnType, yarnWidth, variableSett`. `name` and `yarnType`
-use the literal token `NoValue` when empty.
-
-### PRIVATE WEAVEIT WARP REPEATS and PRIVATE WEAVEIT WEFT REPEATS
-
-Stores a long threading or treadling compactly by recording its repeats:
-
-```
-[PRIVATE WEAVEIT WARP REPEATS]
-1=0,3,7    ;starting at end 0, repeat a 7-end block 3 times
-2=21,2,14
-```
-
-Each keyline is `location, repeatCount, length`. A program that ignores this section still
-gets the full threading from `[THREADING]`; the repeats are only a hint about structure.
+Copyright © 2026 Shannon Young. This document is licensed under the
+[Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/)
+(CC BY 4.0). You are free to copy, translate, adapt, and redistribute it, for any purpose
+including commercially, as long as you give appropriate credit and indicate any changes.
+See [`LICENSE`](LICENSE).
