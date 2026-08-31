@@ -635,6 +635,21 @@ Silently ignore these; they are left in the format only for completeness:
 
 ---
 
+## Proposals
+
+The format has not changed since 1997. Two draft proposals for how it might evolve are open for
+discussion — nothing in them is decided, and neither is part of this guide yet:
+
+- **[WIF 1.2](https://github.com/WIF-Format/WIFStandard/pull/2)** — a conservative revision that
+  stays in the INI text format: standardize the extensions that already ship in the field, and
+  formally retire the parts nothing implements.
+- **[WIF 2](https://github.com/WIF-Format/WIFStandard/pull/1)** — a larger rewrite to JSON with a
+  published schema, normalizing the data model.
+
+Comments welcome on either pull request.
+
+---
+
 ## License and attribution
 
 **The WIF format** is the work of Ravi Nielsen (Maple Hill Software) and the 1996 and 1997
