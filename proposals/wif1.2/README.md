@@ -94,20 +94,45 @@ Weave Type=Balanced   ; Balanced | Warp-faced | Weft-faced | Double-weave | Prof
 Readers should also accept the legacy uppercase tokens (`BALANCE`, `WARPFACE`, `WEFTFACE`,
 `DOUBLEWEAVE`, `PROFILEDRAFT`, `DOUBLEWIDTH`).
 
-### A6. `[WEAVING] Lift Plan=`
+### A6. `[WEAVING] Loom Type=`
 
-Resolves the ambiguity the format guide documents under *Tie-up and treadling vs lift plan*: a file
-may carry a tie-up, a treadling, **and** a lift plan, and readers have to guess which is
-authoritative.
+Records the loom mechanism, so a reader knows how to present the draft and which shed representation
+is authoritative. A hint only — a 1.1 reader ignores the keyline and still draws the draft correctly
+from `[THREADING]`, `[TIEUP]` / `[TREADLING]` / `[LIFTPLAN]`.
 
 ```
 [WEAVING]
-Lift Plan=1   ; optional boolean. 1 = this draft is authoritative as a lift plan
-              ; (table loom, dobby, software). Any [TIEUP] / [TREADLING] present is reference only.
+Shafts=8
+Treadles=8
+Rising Shed=1
+Loom Type=Shaft   ; Shaft | Lift Plan | Rigid Heddle. Absent = Shaft.
 ```
 
-- Absent or `0`: unchanged 1.1 behaviour — prefer `[TIEUP]` + `[TREADLING]`, fall back to `[LIFTPLAN]`.
-- A floor-loom draft omits this keyline and keeps writing tie-up + treadling.
+**`Shaft`** (default) — a floor loom. Unchanged 1.1 behaviour: prefer `[TIEUP]` + `[TREADLING]`, fall
+back to `[LIFTPLAN]`.
+
+**`Lift Plan`** — a table loom, dobby, or software. `[LIFTPLAN]` is authoritative; any `[TIEUP]` /
+`[TREADLING]` present is for reference only. This resolves the ambiguity the format guide documents
+under *Tie-up and treadling vs lift plan*. (A floor-loom draft that also carries a lift plan for
+compatibility keeps `Loom Type=Shaft`.)
+
+**`Rigid Heddle`** — a rigid-heddle loom. The draft is still a valid 2-shaft WIF (or 4-shaft for a
+2-heddle pickup setup): shaft 1 = heddle 1 holes, shaft 2 = heddle 1 slots, shaft 3 = heddle 2 holes,
+shaft 4 = heddle 2 slots. Plain weave is the alternating `[THREADING]` `1,2,1,2…` and a `[LIFTPLAN]`
+(or tie-up + treadling) that alternates raising shaft 1 and shaft 2 — exactly what a 1.1 rigid-heddle
+file already contains. `Loom Type=Rigid Heddle` only tells a 1.2 reader to show holes and slots
+instead of shafts, and heddle up / down instead of "raise shaft 1 / raise shaft 2".
+
+```
+[WEAVING]
+Shafts=2
+Treadles=2
+Rising Shed=1
+Loom Type=Rigid Heddle
+Heddles=1              ; optional. 1 (default), or 2-3 for pickup and pattern heddles.
+```
+
+`Heddles=` is optional and only meaningful with `Loom Type=Rigid Heddle`.
 
 ### A7. `[WEAVING] Rising Shed=` is expected
 
@@ -189,6 +214,9 @@ Not normative changes — ambiguities in the 1997 text, pinned to match the form
 - **Deprecating `Decipoints`.** Safe, or is there a program that relies on it?
 - **`Weave Type` values.** Readable names vs. keeping the legacy uppercase tokens as canonical.
 - **Encoding keyline.** Is `[WIF] Encoding=` worth adding, or is "1.2 means UTF-8" enough?
+- **Rigid-heddle sheds.** Mapping heddle up / down to "raise shaft 1 / raise shaft 2" works for plain
+  weave. Is that enough for 2- and 3-heddle pattern work, or does a rigid-heddle draft need a
+  `neutral` shed and a way to record picked-up ends?
 
 ---
 
